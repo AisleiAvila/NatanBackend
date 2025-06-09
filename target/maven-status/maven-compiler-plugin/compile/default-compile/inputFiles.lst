@@ -20,6 +20,7 @@
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/Servico.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/StatusSolicitacao.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/dto/SignUpRequest.java
+/home/runner/workspace/src/main/java/com/natanconstrutora/config/ErrorAutoCorrector.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/ItemOrcamento.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/dto/LoginRequest.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/repository/RoleRepository.java
