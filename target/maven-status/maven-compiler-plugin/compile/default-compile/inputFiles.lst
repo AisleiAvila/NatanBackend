@@ -1,7 +1,7 @@
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/Solicitacao.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/service/ServicoService.java
-/home/runner/workspace/src/main/java/com/natanconstrutora/security/JwtTokenProvider.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/security/UserPrincipal.java
+/home/runner/workspace/src/main/java/com/natanconstrutora/security/JwtTokenProvider.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/User.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/controller/DashboardController.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/config/DataLoader.java

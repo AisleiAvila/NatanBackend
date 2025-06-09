@@ -1,0 +1,25 @@
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /home/runner/workspace/src/main/java/com/natanconstrutora/NatanBackendApplication.java:[13,1] class, interface, enum, or record expected
+[ERROR] /home/runner/workspace/src/main/java/com/natanconstrutora/NatanBackendApplication.java:[15,1] class, interface, enum, or record expected
+[ERROR] /home/runner/workspace/src/main/java/com/natanconstrutora/NatanBackendApplication.java:[16,1] class, interface, enum, or record expected
+[INFO] 3 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.260 s
+[INFO] Finished at: 2025-06-09T11:59:28Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project natan-backend: Compilation failure: Compilation failure: 
+[ERROR] /home/runner/workspace/src/main/java/com/natanconstrutora/NatanBackendApplication.java:[13,1] class, interface, enum, or record expected
+[ERROR] /home/runner/workspace/src/main/java/com/natanconstrutora/NatanBackendApplication.java:[15,1] class, interface, enum, or record expected
+[ERROR] /home/runner/workspace/src/main/java/com/natanconstrutora/NatanBackendApplication.java:[16,1] class, interface, enum, or record expected
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
