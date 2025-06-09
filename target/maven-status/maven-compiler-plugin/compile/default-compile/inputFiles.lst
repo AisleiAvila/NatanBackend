@@ -19,7 +19,9 @@
 /home/runner/workspace/src/main/java/com/natanconstrutora/repository/AvaliacaoRepository.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/Servico.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/StatusSolicitacao.java
+/home/runner/workspace/src/main/java/com/natanconstrutora/dto/SignUpRequest.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/ItemOrcamento.java
+/home/runner/workspace/src/main/java/com/natanconstrutora/dto/LoginRequest.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/repository/RoleRepository.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/Role.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/controller/AvaliacaoController.java
