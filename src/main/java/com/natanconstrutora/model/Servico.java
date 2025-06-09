@@ -86,8 +86,8 @@ public class Servico {
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public Set<Regiao> getRegioes() { return regioes; }
-    public void setRegioes(Set<Regiao> regioes) { this.regioes = regioes; }
+    public Set<Regiao> getRegioes() { return regioesAtendimento; }
+    public void setRegioes(Set<Regiao> regioes) { this.regioesAtendimento = regioes; }
 
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }

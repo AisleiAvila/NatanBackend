@@ -18,9 +18,14 @@ public class Avaliacao {
     private Long id;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "solicitacao_id")
     private Solicitacao solicitacao;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")
+    private User cliente;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,11 +46,11 @@ public class Avaliacao {
     // Constructors
     public Avaliacao() {}
 
-    public Avaliacao(Solicitacao solicitacao, User prestador, Integer nota, String comentario) {
+    public Avaliacao(Solicitacao solicitacao, User cliente, User prestador, Integer nota) {
         this.solicitacao = solicitacao;
+        this.cliente = cliente;
         this.prestador = prestador;
         this.nota = nota;
-        this.comentario = comentario;
     }
 
     // Getters and Setters
@@ -54,6 +59,9 @@ public class Avaliacao {
 
     public Solicitacao getSolicitacao() { return solicitacao; }
     public void setSolicitacao(Solicitacao solicitacao) { this.solicitacao = solicitacao; }
+
+    public User getCliente() { return cliente; }
+    public void setCliente(User cliente) { this.cliente = cliente; }
 
     public User getPrestador() { return prestador; }
     public void setPrestador(User prestador) { this.prestador = prestador; }

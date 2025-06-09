@@ -18,8 +18,11 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
     List<Solicitacao> findByRegiao(Regiao regiao);
     List<Solicitacao> findByClienteId(Long clienteId);
     List<Solicitacao> findByPrestadorId(Long prestadorId);
+    List<Solicitacao> findByCreatedAtBetween(LocalDateTime inicio, LocalDateTime fim);
     
-    @Query("SELECT s FROM Solicitacao s WHERE s.createdAt BETWEEN :startDate AND :endDate")
-    List<Solicitacao> findByDateRange(@Param("startDate") LocalDateTime startDate, 
-                                     @Param("endDate") LocalDateTime endDate);
+    @Query("SELECT s FROM Solicitacao s WHERE s.status = :status AND s.regiao = :regiao")
+    List<Solicitacao> findByStatusAndRegiao(@Param("status") StatusSolicitacao status, @Param("regiao") Regiao regiao);
+    
+    @Query("SELECT COUNT(s) FROM Solicitacao s WHERE s.status = :status")
+    Long countByStatus(@Param("status") StatusSolicitacao status);
 }

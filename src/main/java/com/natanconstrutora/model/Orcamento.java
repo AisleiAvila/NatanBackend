@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,44 +21,40 @@ public class Orcamento {
     private Long id;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "solicitacao_id")
     private Solicitacao solicitacao;
 
     @OneToMany(mappedBy = "orcamento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ItemOrcamento> itens = new ArrayList<>();
 
-    @NotNull
     @PositiveOrZero
     @Column(precision = 10, scale = 2)
-    private BigDecimal subtotal;
+    private BigDecimal subtotal = BigDecimal.ZERO;
 
-    @NotNull
     @PositiveOrZero
-    @Column(precision = 5, scale = 4)
-    private BigDecimal taxaIva;
+    @Column(precision = 5, scale = 2)
+    private BigDecimal taxaIva = new BigDecimal("23.00"); // Taxa padrão de IVA em Portugal
 
-    @NotNull
     @PositiveOrZero
     @Column(precision = 10, scale = 2)
-    private BigDecimal valorIva;
+    private BigDecimal valorIva = BigDecimal.ZERO;
 
-    @NotNull
     @PositiveOrZero
     @Column(precision = 10, scale = 2)
-    private BigDecimal total;
+    private BigDecimal total = BigDecimal.ZERO;
 
-    @NotNull
+    @PositiveOrZero
+    @Column(precision = 5, scale = 2)
+    private BigDecimal percentualPrestador = new BigDecimal("70.00"); // 70% para o prestador
+
     @PositiveOrZero
     @Column(precision = 10, scale = 2)
-    private BigDecimal valorPrestador;
+    private BigDecimal valorPrestador = BigDecimal.ZERO;
 
-    @NotNull
-    private LocalDateTime dataValidade;
+    private LocalDate dataValidade;
 
     private Boolean aprovado = false;
-
-    private LocalDateTime dataAprovacao;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -68,10 +65,19 @@ public class Orcamento {
     // Constructors
     public Orcamento() {}
 
-    public Orcamento(Solicitacao solicitacao, BigDecimal taxaIva, LocalDateTime dataValidade) {
+    public Orcamento(Solicitacao solicitacao) {
         this.solicitacao = solicitacao;
-        this.taxaIva = taxaIva;
-        this.dataValidade = dataValidade;
+    }
+
+    // Método para calcular totais
+    public void calcularTotais() {
+        this.subtotal = itens.stream()
+                .map(ItemOrcamento::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        
+        this.valorIva = subtotal.multiply(taxaIva).divide(new BigDecimal("100"));
+        this.total = subtotal.add(valorIva);
+        this.valorPrestador = subtotal.multiply(percentualPrestador).divide(new BigDecimal("100"));
     }
 
     // Getters and Setters
@@ -96,17 +102,17 @@ public class Orcamento {
     public BigDecimal getTotal() { return total; }
     public void setTotal(BigDecimal total) { this.total = total; }
 
+    public BigDecimal getPercentualPrestador() { return percentualPrestador; }
+    public void setPercentualPrestador(BigDecimal percentualPrestador) { this.percentualPrestador = percentualPrestador; }
+
     public BigDecimal getValorPrestador() { return valorPrestador; }
     public void setValorPrestador(BigDecimal valorPrestador) { this.valorPrestador = valorPrestador; }
 
-    public LocalDateTime getDataValidade() { return dataValidade; }
-    public void setDataValidade(LocalDateTime dataValidade) { this.dataValidade = dataValidade; }
+    public LocalDate getDataValidade() { return dataValidade; }
+    public void setDataValidade(LocalDate dataValidade) { this.dataValidade = dataValidade; }
 
     public Boolean getAprovado() { return aprovado; }
     public void setAprovado(Boolean aprovado) { this.aprovado = aprovado; }
-
-    public LocalDateTime getDataAprovacao() { return dataAprovacao; }
-    public void setDataAprovacao(LocalDateTime dataAprovacao) { this.dataAprovacao = dataAprovacao; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }

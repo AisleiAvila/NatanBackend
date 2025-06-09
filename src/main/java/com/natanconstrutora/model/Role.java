@@ -11,9 +11,10 @@ public class Role {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20)
+    @Column(length = 60)
     private RoleName name;
 
+    // Constructors
     public Role() {}
 
     public Role(RoleName name) {

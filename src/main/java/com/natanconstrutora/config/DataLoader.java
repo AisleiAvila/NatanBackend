@@ -8,9 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 @Component
@@ -33,73 +31,65 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Criar roles
+        // Criar roles se não existirem
         if (roleRepository.count() == 0) {
-            Role clientRole = new Role(RoleName.ROLE_CLIENT);
-            Role prestadorRole = new Role(RoleName.ROLE_PRESTADOR);
-            Role adminRole = new Role(RoleName.ROLE_ADMIN);
-
-            roleRepository.saveAll(Arrays.asList(clientRole, prestadorRole, adminRole));
+            Role roleCliente = new Role(RoleName.ROLE_CLIENTE);
+            Role rolePrestador = new Role(RoleName.ROLE_PRESTADOR);
+            Role roleAdmin = new Role(RoleName.ROLE_ADMIN);
+            roleRepository.saveAll(Arrays.asList(roleCliente, rolePrestador, roleAdmin));
         }
 
-        // Criar usuários
+        // Criar usuários se não existirem
         if (userRepository.count() == 0) {
-            // Admin
-            User admin = new User("admin", "admin@natanconstrutora.pt", 
-                                passwordEncoder.encode("admin123"), "Administrador");
-            admin.setTelefone("123456789");
-            admin.setEndereco("Rua Principal, 123");
-            admin.setRegiao(Regiao.COIMBRA);
-            Set<Role> adminRoles = new HashSet<>();
-            adminRoles.add(roleRepository.findByName(RoleName.ROLE_ADMIN).get());
-            admin.setRoles(adminRoles);
+            Role roleCliente = roleRepository.findByName(RoleName.ROLE_CLIENTE).get();
+            Role rolePrestador = roleRepository.findByName(RoleName.ROLE_PRESTADOR).get();
+            Role roleAdmin = roleRepository.findByName(RoleName.ROLE_ADMIN).get();
 
             // Cliente
-            User cliente = new User("joao", "joao@email.pt", 
-                                  passwordEncoder.encode("123456"), "João Silva");
-            cliente.setTelefone("987654321");
-            cliente.setEndereco("Rua das Flores, 456");
+            User cliente = new User("joao", "joao@email.com", passwordEncoder.encode("123456"), "João Silva");
+            cliente.setTelefone("912345678");
+            cliente.setEndereco("Rua das Flores, 123, Aveiro");
             cliente.setRegiao(Regiao.AVEIRO);
-            Set<Role> clientRoles = new HashSet<>();
-            clientRoles.add(roleRepository.findByName(RoleName.ROLE_CLIENT).get());
-            cliente.setRoles(clientRoles);
+            cliente.setRoles(Set.of(roleCliente));
 
             // Prestador
-            User prestador = new User("carlos", "carlos@email.pt", 
-                                    passwordEncoder.encode("123456"), "Carlos Santos");
-            prestador.setTelefone("555666777");
-            prestador.setEndereco("Rua dos Técnicos, 789");
+            User prestador = new User("mario", "mario@email.com", passwordEncoder.encode("123456"), "Mário Santos");
+            prestador.setTelefone("913456789");
+            prestador.setEndereco("Rua dos Serviços, 456, Aveiro");
             prestador.setRegiao(Regiao.AVEIRO);
-            Set<Role> prestadorRoles = new HashSet<>();
-            prestadorRoles.add(roleRepository.findByName(RoleName.ROLE_PRESTADOR).get());
-            prestador.setRoles(prestadorRoles);
+            prestador.setRoles(Set.of(rolePrestador));
 
-            userRepository.saveAll(Arrays.asList(admin, cliente, prestador));
+            // Admin
+            User admin = new User("admin", "admin@natanconstrutora.com", passwordEncoder.encode("admin123"), "Administrador");
+            admin.setRoles(Set.of(roleAdmin));
+
+            userRepository.saveAll(Arrays.asList(cliente, prestador, admin));
         }
 
-        // Criar serviços
+        // Criar serviços se não existirem
         if (servicoRepository.count() == 0) {
-            Servico servico1 = new Servico("Reparação de Torneira", 
-                                         "Reparação e substituição de torneiras com defeito",
+            Servico servico1 = new Servico("Reparação de Canalizações", 
+                                         "Reparação de fugas e problemas de canalização",
                                          new BigDecimal("25.00"));
-            servico1.setRegioes(Set.of(Regiao.AVEIRO, Regiao.COIMBRA));
+            servico1.setRegioesAtendimento(Set.of(Regiao.AVEIRO, Regiao.COIMBRA));
             servico1.setAtivo(true);
 
             Servico servico2 = new Servico("Instalação Elétrica", 
                                          "Instalação e reparação de sistemas elétricos",
                                          new BigDecimal("50.00"));
-            servico2.setRegioes(Set.of(Regiao.AVEIRO, Regiao.COIMBRA, Regiao.SAO_MIGUEL));
+            servico2.setRegioesAtendimento(Set.of(Regiao.AVEIRO, Regiao.COIMBRA, Regiao.SAO_MIGUEL));
             servico2.setAtivo(true);
 
             Servico servico3 = new Servico("Instalação de Tomadas", 
                                          "Instalação de novas tomadas elétricas",
                                          new BigDecimal("35.00"));
-            servico3.setRegioes(Set.of(Regiao.SAO_MIGUEL, Regiao.AVEIRO, Regiao.COIMBRA));
+            servico3.setRegioesAtendimento(Set.of(Regiao.SAO_MIGUEL, Regiao.AVEIRO, Regiao.COIMBRA));
+            servico3.setAtivo(true);
 
             servicoRepository.saveAll(Arrays.asList(servico1, servico2, servico3));
         }
 
-        // Criar solicitações
+        // Criar solicitações de teste se não existirem
         if (solicitacaoRepository.count() == 0) {
             User cliente = userRepository.findByUsername("joao").get();
             Servico servico = servicoRepository.findAll().get(0);
@@ -109,24 +99,7 @@ public class DataLoader implements CommandLineRunner {
                                                       "Rua das Flores, 456, Aveiro", 
                                                       Regiao.AVEIRO);
 
-            Solicitacao solicitacao2 = new Solicitacao(cliente, 
-                                                      servicoRepository.findAll().get(1),
-                                                      "Preciso de instalar uma nova tomada no quarto",
-                                                      "Rua das Flores, 456, Aveiro", 
-                                                      Regiao.AVEIRO);
-            solicitacao2.setStatus(StatusSolicitacao.EM_ANDAMENTO);
-            solicitacao2.setPrestador(userRepository.findByUsername("carlos").get());
-
-            solicitacaoRepository.saveAll(Arrays.asList(solicitacao1, solicitacao2));
+            solicitacaoRepository.save(solicitacao1);
         }
-
-        System.out.println("=== DADOS DE TESTE CARREGADOS ===");
-        System.out.println("Admin: admin / admin123");
-        System.out.println("Cliente: joao / 123456");
-        System.out.println("Prestador: carlos / 123456");
-        System.out.println("H2 Console: http://localhost:5000/h2-console");
-        System.out.println("JDBC URL: jdbc:h2:mem:natandb");
-        System.out.println("Username: sa");
-        System.out.println("Password: password");
     }
 }
