@@ -1,6 +1,7 @@
 package com.natanconstrutora.controller;
 
 import com.natanconstrutora.model.Cliente;
+import com.natanconstrutora.model.RegiaoEnum;
 import com.natanconstrutora.service.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/clientes")
@@ -71,12 +74,12 @@ public class ClienteController {
         @ApiResponse(responseCode = "404", description = "Região não encontrada"),
         @ApiResponse(responseCode = "403", description = "Acesso negado - requer permissão de ADMIN")
     })
-    @GetMapping("/regiao/{regiaoId}")
+    @GetMapping("/regiao/{regiao}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<Cliente>> buscarPorRegiao(
-            @Parameter(description = "ID da região", required = true)
-            @PathVariable Long regiaoId) {
-        return ResponseEntity.ok(clienteService.buscarPorRegiao(regiaoId));
+    public List<Cliente> buscarPorRegiao(
+            @Parameter(description = "Região do cliente", required = true)
+            @PathVariable RegiaoEnum regiao) {
+        return clienteService.buscarPorRegiao(regiao);
     }
 
     @Operation(summary = "Criar cliente", description = "Cria um novo cliente no sistema")
@@ -161,5 +164,24 @@ public class ClienteController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/contagem/periodo")
+    public long contarClientesPorPeriodo(
+            @RequestParam LocalDateTime inicio,
+            @RequestParam LocalDateTime fim) {
+        return clienteService.contarClientesPorPeriodo(inicio, fim);
+    }
+
+    @GetMapping("/contagem/ativos")
+    public long contarClientesAtivos() {
+        return clienteService.contarClientesAtivos();
+    }
+
+    @GetMapping("/estatisticas/regiao")
+    public List<Map<String, Object>> buscarClientesPorRegiao(
+            @RequestParam LocalDateTime inicio,
+            @RequestParam LocalDateTime fim) {
+        return clienteService.buscarClientesPorRegiao(inicio, fim);
     }
 } 

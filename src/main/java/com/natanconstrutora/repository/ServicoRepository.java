@@ -25,7 +25,7 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
     List<Servico> findByCategoriaId(Long categoriaId);
     List<Servico> findByStatus(String status);
     List<Servico> findByDataCriacaoBetween(LocalDateTime inicio, LocalDateTime fim);
-    List<Servico> findByValorBetween(Double valorMinimo, Double valorMaximo);
+    List<Servico> findByPrecoTabeladoBetween(Double valorMinimo, Double valorMaximo);
 
     Long countByDataCriacaoBetween(LocalDateTime inicio, LocalDateTime fim);
 

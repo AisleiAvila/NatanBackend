@@ -20,14 +20,8 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
     List<Pagamento> findByServico_ClienteId(Long clienteId);
     List<Pagamento> findByServico_PrestadorId(Long prestadorId);
 
-    @Query("SELECT p.prestador.id as prestadorId, p.prestador.nome as prestadorNome, SUM(p.valor) as total " +
-           "FROM Pagamento p " +
-           "WHERE p.dataPagamento BETWEEN :inicio AND :fim " +
-           "GROUP BY p.prestador.id, p.prestador.nome")
-    List<Map<String, Object>> findFaturamentoPorPrestador(
-        @Param("inicio") LocalDateTime inicio,
-        @Param("fim") LocalDateTime fim
-    );
+    @Query("SELECT p.prestador.id as prestadorId, p.prestador.nome as prestadorNome, SUM(p.valor) as total FROM Pagamento p WHERE p.dataPagamento BETWEEN :inicio AND :fim GROUP BY p.prestador.id, p.prestador.nome")
+    List<Map<String, Object>> findFaturamentoPorPrestador(@Param("inicio") LocalDateTime inicio, @Param("fim") LocalDateTime fim);
 
     @Query("SELECT p.servico.categoria.id as categoriaId, p.servico.categoria.nome as categoriaNome, SUM(p.valor) as total " +
            "FROM Pagamento p " +

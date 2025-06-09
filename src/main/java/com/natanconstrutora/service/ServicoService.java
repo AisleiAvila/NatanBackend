@@ -84,7 +84,7 @@ public class ServicoService {
     }
 
     public List<Servico> buscarPorValor(Double valorMinimo, Double valorMaximo) {
-        return servicoRepository.findByValorBetween(valorMinimo, valorMaximo);
+        return servicoRepository.findByPrecoTabeladoBetween(valorMinimo, valorMaximo);
     }
 
     public List<Servico> listar() {

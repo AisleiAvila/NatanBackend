@@ -6,7 +6,6 @@ import com.natanconstrutora.repository.SolicitacaoRepository;
 import com.natanconstrutora.repository.UserRepository;
 import com.natanconstrutora.repository.ServicoRepository;
 import com.natanconstrutora.repository.AvaliacaoRepository;
-import com.natanconstrutora.repository.RegiaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +29,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.natanconstrutora.service.ClienteService;
+import com.natanconstrutora.service.SolicitacaoService;
 
 @RestController
 @RequestMapping("/api/admin/dashboard")
@@ -50,10 +54,13 @@ public class DashboardController {
     private AvaliacaoRepository avaliacaoRepository;
 
     @Autowired
-    private RegiaoRepository regiaoRepository;
+    private DashboardService dashboardService;
 
     @Autowired
-    private DashboardService dashboardService;
+    private ClienteService clienteService;
+
+    @Autowired
+    private SolicitacaoService solicitacaoService;
 
     @GetMapping("/metricas")
     public Map<String, Object> getMetricas() {
@@ -167,5 +174,34 @@ public class DashboardController {
             @Parameter(description = "Data final do período", required = true)
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim) {
         return ResponseEntity.ok(dashboardService.obterDadosClientes(dataInicio, dataFim));
+    }
+
+    @GetMapping("/clientes/por-regiao")
+    public ResponseEntity<List<Map<String, Object>>> getClientesPorRegiao(
+            @RequestParam LocalDateTime inicio,
+            @RequestParam LocalDateTime fim) {
+        return ResponseEntity.ok(clienteService.contarClientesPorRegiao(inicio, fim));
+    }
+
+    @GetMapping("/clientes/ativos")
+    public ResponseEntity<Long> getClientesAtivos() {
+        return ResponseEntity.ok(clienteService.contarClientesAtivos());
+    }
+
+    @GetMapping("/solicitacoes/por-regiao")
+    public ResponseEntity<List<Map<String, Object>>> getSolicitacoesPorRegiao(
+            @RequestParam LocalDateTime inicio,
+            @RequestParam LocalDateTime fim) {
+        return ResponseEntity.ok(solicitacaoService.contarSolicitacoesPorRegiao(inicio, fim));
+    }
+
+    @GetMapping("/solicitacoes/por-status")
+    public ResponseEntity<List<Map<String, Object>>> getSolicitacoesPorStatus() {
+        return ResponseEntity.ok(solicitacaoService.contarSolicitacoesPorStatus());
+    }
+
+    @GetMapping("/regioes")
+    public ResponseEntity<RegiaoEnum[]> getRegioes() {
+        return ResponseEntity.ok(RegiaoEnum.values());
     }
 }

@@ -1,12 +1,15 @@
 package com.natanconstrutora.service;
 
 import com.natanconstrutora.model.Cliente;
+import com.natanconstrutora.model.RegiaoEnum;
 import com.natanconstrutora.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -35,8 +38,8 @@ public class ClienteService {
         return clienteRepository.findByNomeContainingIgnoreCase(nome);
     }
 
-    public List<Cliente> buscarPorRegiao(Long regiaoId) {
-        return clienteRepository.findByRegiaoId(regiaoId);
+    public List<Cliente> buscarPorRegiao(RegiaoEnum regiao) {
+        return clienteRepository.findByRegiao(regiao);
     }
 
     @Transactional
@@ -80,5 +83,21 @@ public class ClienteService {
             .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
         cliente.setAtivo(false);
         clienteRepository.save(cliente);
+    }
+
+    public long contarClientesPorPeriodo(LocalDateTime inicio, LocalDateTime fim) {
+        return clienteRepository.countByDataCadastroBetween(inicio, fim);
+    }
+
+    public long contarClientesAtivos() {
+        return clienteRepository.countByAtivoTrue();
+    }
+
+    public List<Map<String, Object>> buscarClientesPorRegiao(LocalDateTime inicio, LocalDateTime fim) {
+        return clienteRepository.findClientesPorRegiao(inicio, fim);
+    }
+
+    public List<Map<String, Object>> contarClientesPorRegiao(LocalDateTime inicio, LocalDateTime fim) {
+        return clienteRepository.findClientesPorRegiao(inicio, fim);
     }
 } 

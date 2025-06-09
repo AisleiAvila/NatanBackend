@@ -1,6 +1,7 @@
 package com.natanconstrutora.repository;
 
 import com.natanconstrutora.model.Prestador;
+import com.natanconstrutora.model.RegiaoEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,10 +23,11 @@ public interface PrestadorRepository extends JpaRepository<Prestador, Long> {
     List<Prestador> findByRegioesId(Long regiaoId);
     List<Prestador> findByCategoriasId(Long categoriaId);
     long countByDataCadastroBetween(LocalDateTime inicio, LocalDateTime fim);
+    List<Prestador> findByRegiao(RegiaoEnum regiao);
 
     @Query("SELECT c.nome as categoria, COUNT(p) as total FROM Prestador p JOIN p.categorias c WHERE p.dataCadastro BETWEEN :inicio AND :fim GROUP BY c.nome")
     List<Map<String, Object>> findPrestadoresPorCategoria(@Param("inicio") LocalDateTime inicio, @Param("fim") LocalDateTime fim);
 
-    @Query("SELECT r.nome as regiao, COUNT(p) as total FROM Prestador p JOIN p.regioes r WHERE p.dataCadastro BETWEEN :inicio AND :fim GROUP BY r.nome")
+    @Query("SELECT p.regiao as regiao, COUNT(p) as total FROM Prestador p WHERE p.dataCadastro BETWEEN :inicio AND :fim GROUP BY p.regiao")
     List<Map<String, Object>> findPrestadoresPorRegiao(@Param("inicio") LocalDateTime inicio, @Param("fim") LocalDateTime fim);
 } 

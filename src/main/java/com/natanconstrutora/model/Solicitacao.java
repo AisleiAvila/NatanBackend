@@ -54,7 +54,7 @@ public class Solicitacao {
     @OneToMany(mappedBy = "solicitacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ImagemServico> imagens = new ArrayList<>();
 
-    @OneToOne(mappedBy = "solicitacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Avaliacao avaliacao;
 
     private LocalDateTime dataAgendamento;

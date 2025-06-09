@@ -33,4 +33,7 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
 
     @Query("SELECT s.status as status, COUNT(s) as total FROM Solicitacao s WHERE s.createdAt BETWEEN :inicio AND :fim GROUP BY s.status")
     List<Map<String, Object>> findSolicitacoesPorStatus(@Param("inicio") LocalDateTime inicio, @Param("fim") LocalDateTime fim);
+
+    @Query("SELECT s.status as status, COUNT(s) as total FROM Solicitacao s GROUP BY s.status")
+    List<Map<String, Object>> findSolicitacoesPorStatus();
 }

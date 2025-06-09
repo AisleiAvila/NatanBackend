@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SolicitacaoService {
@@ -96,5 +98,13 @@ public class SolicitacaoService {
                 .orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
         
         return userRepository.findPrestadoresByRegiao(RoleName.ROLE_PRESTADOR, solicitacao.getRegiao());
+    }
+
+    public List<Map<String, Object>> contarSolicitacoesPorRegiao(LocalDateTime inicio, LocalDateTime fim) {
+        return solicitacaoRepository.findSolicitacoesPorRegiao(inicio, fim);
+    }
+
+    public List<Map<String, Object>> contarSolicitacoesPorStatus() {
+        return solicitacaoRepository.findSolicitacoesPorStatus();
     }
 }

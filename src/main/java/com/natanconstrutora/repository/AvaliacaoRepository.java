@@ -27,26 +27,29 @@ public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Long> {
     @Query("SELECT AVG(a.nota) FROM Avaliacao a")
     Double findMediaAvaliacoes();
 
-    @Query("SELECT AVG(a.nota) FROM Avaliacao a WHERE a.dataCriacao BETWEEN :inicio AND :fim")
+    @Query("SELECT AVG(a.nota) FROM Avaliacao a WHERE a.solicitacao.createdAt BETWEEN :inicio AND :fim")
     Double findMediaAvaliacoesPorPeriodo(
         @Param("inicio") LocalDateTime inicio,
         @Param("fim") LocalDateTime fim
     );
 
-    @Query("SELECT AVG(a.nota) FROM Avaliacao a WHERE a.servico.prestador.id = :prestadorId AND a.dataCriacao BETWEEN :inicio AND :fim")
+    @Query("SELECT AVG(a.nota) FROM Avaliacao a WHERE a.servico.prestador.id = :prestadorId AND a.solicitacao.createdAt BETWEEN :inicio AND :fim")
     Double findMediaAvaliacoesPorPrestadorId(
         @Param("prestadorId") Long prestadorId,
         @Param("inicio") LocalDateTime inicio,
         @Param("fim") LocalDateTime fim
     );
 
+    @Query("SELECT COUNT(a) FROM Avaliacao a WHERE a.solicitacao.createdAt BETWEEN :inicio AND :fim")
     Long countByDataCriacaoBetween(LocalDateTime inicio, LocalDateTime fim);
+
+    @Query("SELECT COUNT(a) FROM Avaliacao a WHERE a.prestador.id = :prestadorId AND a.solicitacao.createdAt BETWEEN :inicio AND :fim")
     Long countByPrestadorIdAndDataCriacaoBetween(Long prestadorId, LocalDateTime inicio, LocalDateTime fim);
 
     @Query("SELECT a.servico.prestador.id as prestadorId, a.servico.prestador.nome as prestadorNome, " +
            "COUNT(a) as total, AVG(a.nota) as media " +
            "FROM Avaliacao a " +
-           "WHERE a.dataCriacao BETWEEN :inicio AND :fim " +
+           "WHERE a.solicitacao.createdAt BETWEEN :inicio AND :fim " +
            "GROUP BY a.servico.prestador.id, a.servico.prestador.nome")
     List<Map<String, Object>> findAvaliacoesPorPrestador(
         @Param("inicio") LocalDateTime inicio,
@@ -56,7 +59,7 @@ public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Long> {
     @Query("SELECT a.servico.categoria.id as categoriaId, a.servico.categoria.nome as categoriaNome, " +
            "COUNT(a) as total, AVG(a.nota) as media " +
            "FROM Avaliacao a " +
-           "WHERE a.dataCriacao BETWEEN :inicio AND :fim " +
+           "WHERE a.solicitacao.createdAt BETWEEN :inicio AND :fim " +
            "GROUP BY a.servico.categoria.id, a.servico.categoria.nome")
     List<Map<String, Object>> findAvaliacoesPorCategoria(
         @Param("inicio") LocalDateTime inicio,

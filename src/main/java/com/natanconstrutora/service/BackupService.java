@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class BackupService {
 
-    @Value("${backup.directory}")
+    @Value("${app.backup.dir}")
     private String backupDirectory;
 
     @Transactional

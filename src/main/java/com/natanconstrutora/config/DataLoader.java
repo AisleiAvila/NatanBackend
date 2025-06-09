@@ -8,8 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Set;
+import java.util.HashSet;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -21,84 +22,93 @@ public class DataLoader implements CommandLineRunner {
     private RoleRepository roleRepository;
 
     @Autowired
-    private ServicoRepository servicoRepository;
-
-    @Autowired
-    private SolicitacaoRepository solicitacaoRepository;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private FuncionarioRepository funcionarioRepository;
+
+    @Autowired
+    private MaterialRepository materialRepository;
+
+    @Autowired
+    private ServicoRepository servicoRepository;
+
     @Override
-    public void run(String... args) throws Exception {
-        // Criar roles se não existirem
-        if (roleRepository.count() == 0) {
-            Role roleCliente = new Role(RoleName.ROLE_CLIENTE);
-            Role rolePrestador = new Role(RoleName.ROLE_PRESTADOR);
-            Role roleAdmin = new Role(RoleName.ROLE_ADMIN);
-            roleRepository.saveAll(Arrays.asList(roleCliente, rolePrestador, roleAdmin));
-        }
+    public void run(String... args) {
+        // Criar roles
+        Role adminRole = new Role();
+        adminRole.setName(RoleName.ROLE_ADMIN);
+        roleRepository.save(adminRole);
 
-        // Criar usuários se não existirem
-        if (userRepository.count() == 0) {
-            Role roleCliente = roleRepository.findByName(RoleName.ROLE_CLIENTE).get();
-            Role rolePrestador = roleRepository.findByName(RoleName.ROLE_PRESTADOR).get();
-            Role roleAdmin = roleRepository.findByName(RoleName.ROLE_ADMIN).get();
+        Role userRole = new Role();
+        userRole.setName(RoleName.ROLE_USER);
+        roleRepository.save(userRole);
 
-            // Cliente
-            User cliente = new User("joao", "joao@email.com", passwordEncoder.encode("123456"), "João Silva");
-            cliente.setTelefone("912345678");
-            cliente.setEndereco("Rua das Flores, 123, Aveiro");
-            cliente.setRegiao(RegiaoEnum.AVEIRO);
-            cliente.setRoles(Set.of(roleCliente));
+        // Criar usuário admin
+        User admin = new User();
+        admin.setUsername("admin");
+        admin.setPassword(passwordEncoder.encode("admin123"));
+        admin.setRoles(new HashSet<>(Arrays.asList(adminRole)));
+        userRepository.save(admin);
 
-            // Prestador
-            User prestador = new User("pedro", "pedro@email.com", passwordEncoder.encode("123456"), "Pedro Santos");
-            prestador.setTelefone("913456789");
-            prestador.setEndereco("Rua das Oliveiras, 456, Coimbra");
-            prestador.setRegiao(RegiaoEnum.COIMBRA);
-            prestador.setRoles(Set.of(rolePrestador));
+        // Criar clientes
+        Cliente cliente1 = new Cliente();
+        cliente1.setNome("João Silva");
+        cliente1.setEmail("joao@email.com");
+        cliente1.setTelefone("(11) 99999-9999");
+        cliente1.setCpf("123.456.789-00");
+        cliente1.setRegiao(RegiaoEnum.SUDESTE);
+        clienteRepository.save(cliente1);
 
-            // Admin
-            User admin = new User("admin", "admin@natanconstrutora.com", passwordEncoder.encode("admin123"), "Administrador");
-            admin.setTelefone("914567890");
-            admin.setEndereco("Sede da Empresa");
-            admin.setRegiao(RegiaoEnum.SAO_MIGUEL);
-            admin.setRoles(Set.of(roleAdmin));
+        Cliente cliente2 = new Cliente();
+        cliente2.setNome("Maria Santos");
+        cliente2.setEmail("maria@email.com");
+        cliente2.setTelefone("(11) 88888-8888");
+        cliente2.setCpf("987.654.321-00");
+        cliente2.setRegiao(RegiaoEnum.NORDESTE);
+        clienteRepository.save(cliente2);
 
-            userRepository.saveAll(Arrays.asList(cliente, prestador, admin));
-        }
+        Cliente cliente3 = new Cliente();
+        cliente3.setNome("Pedro Oliveira");
+        cliente3.setEmail("pedro@email.com");
+        cliente3.setTelefone("(11) 77777-7777");
+        cliente3.setCpf("456.789.123-00");
+        cliente3.setRegiao(RegiaoEnum.SUL);
+        clienteRepository.save(cliente3);
 
-        // Criar serviços se não existirem
-        if (servicoRepository.count() == 0) {
-            Servico servico1 = new Servico();
-            servico1.setNome("Reparação de Torneiras");
-            servico1.setDescricao("Conserto e substituição de torneiras domésticas");
-            servico1.setPrecoTabelado(new BigDecimal("50.00"));
-            servico1.setRegioesAtendimento(Set.of(RegiaoEnum.AVEIRO, RegiaoEnum.COIMBRA));
-            servico1.setAtivo(true);
+        // Criar funcionários
+        Funcionario funcionario1 = new Funcionario();
+        funcionario1.setNome("Carlos Souza");
+        funcionario1.setEmail("carlos@email.com");
+        funcionario1.setTelefone("(11) 66666-6666");
+        funcionario1.setCpf("789.123.456-00");
+        funcionario1.setCargo("Pedreiro");
+        funcionario1.setSalario(new BigDecimal("2500.00"));
+        funcionarioRepository.save(funcionario1);
 
-            Servico servico2 = new Servico();
-            servico2.setNome("Instalação Elétrica");
-            servico2.setDescricao("Instalação e manutenção de sistemas elétricos");
-            servico2.setPrecoTabelado(new BigDecimal("120.00"));
-            servico2.setRegioesAtendimento(Set.of(RegiaoEnum.SAO_MIGUEL, RegiaoEnum.AVEIRO, RegiaoEnum.COIMBRA));
-            servico2.setAtivo(true);
+        // Criar materiais
+        Material material1 = new Material();
+        material1.setNome("Cimento");
+        material1.setDescricao("Cimento Portland");
+        material1.setPrecoUnitario(new BigDecimal("25.00"));
+        material1.setQuantidadeEstoque(100);
+        materialRepository.save(material1);
 
-            servicoRepository.saveAll(Arrays.asList(servico1, servico2));
-        }
+        Material material2 = new Material();
+        material2.setNome("Areia");
+        material2.setDescricao("Areia média");
+        material2.setPrecoUnitario(new BigDecimal("50.00"));
+        material2.setQuantidadeEstoque(200);
+        materialRepository.save(material2);
 
-        // Criar solicitações de teste se não existirem
-        if (solicitacaoRepository.count() == 0) {
-            User cliente = userRepository.findByUsername("joao").get();
-            Servico servico = servicoRepository.findAll().get(0);
-
-            Solicitacao solicitacao1 = new Solicitacao(cliente, servico,
-                    "A torneira da cozinha está a pingar constantemente",
-                    "Rua das Flores, 456, Aveiro",
-                    RegiaoEnum.AVEIRO);
-
-            solicitacaoRepository.save(solicitacao1);
-        }
+        // Criar serviços
+        Servico servico1 = new Servico();
+        servico1.setNome("Alvenaria");
+        servico1.setDescricao("Construção de paredes");
+        servico1.setPrecoHora(new BigDecimal("100.00"));
+        servicoRepository.save(servico1);
     }
 }

@@ -1,7 +1,9 @@
 package com.natanconstrutora.model;
 
 public enum RegiaoEnum {
-    AVEIRO,
-    COIMBRA,
-    SAO_MIGUEL
+    NORTE,
+    NORDESTE,
+    CENTRO_OESTE,
+    SUDESTE,
+    SUL
 } 

@@ -102,6 +102,6 @@ public class UsuarioService {
     }
 
     public List<Usuario> buscarPorPerfil(String perfil) {
-        return usuarioRepository.findByPerfil(perfil);
+        return usuarioRepository.findByPerfisNome(perfil);
     }
 } 

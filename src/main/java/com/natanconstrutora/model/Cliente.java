@@ -2,6 +2,9 @@ package com.natanconstrutora.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -28,4 +31,13 @@ public class Cliente {
     private Endereco endereco;
 
     private boolean ativo = true;
+
+    @Enumerated(EnumType.STRING)
+    private RegiaoEnum regiao;
+
+    @CreationTimestamp
+    private LocalDateTime dataCadastro;
+
+    @UpdateTimestamp
+    private LocalDateTime dataAtualizacao;
 } 

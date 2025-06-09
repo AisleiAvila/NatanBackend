@@ -1,30 +1,34 @@
 server:
-  port: 5000
+  port: 8080
   address: 0.0.0.0
+  servlet:
+    context-path: /api
 
 spring:
   application:
     name: natan-backend
 
   datasource:
-    url: jdbc:h2:mem:natandb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:natan_db
     username: sa
-    password: password
+    password:
+    driver-class-name: org.h2.Driver
 
   h2:
     console:
       enabled: true
       path: /h2-console
+      settings:
+        web-allow-others: true
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
         format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
   mail:
     host: smtp.gmail.com
@@ -38,28 +42,41 @@ spring:
           starttls:
             enable: true
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+app:
+  upload:
+    dir: ${UPLOAD_DIR:uploads}
+  backup:
+    dir: ${BACKUP_DIR:backups}
+
 jwt:
   secret: ${JWT_SECRET:natanConstructoraSecretKey2024}
-  expiration: 86400000 # 24 hours
+  expiration: 86400000 # 24 horas em milissegundos
 
 iva:
-  rate: 0.23 # 23% IVA rate
+  taxa-padrao: 0.23 # 23%
 
 prestador:
   percentage: 0.70 # 70% for service providers
 
 twilio:
-  account-sid: ${TWILIO_ACCOUNT_SID:}
-  auth-token: ${TWILIO_AUTH_TOKEN:}
-  phone-number: ${TWILIO_PHONE_NUMBER:}
+  account-sid: ${TWILIO_ACCOUNT_SID}
+  auth-token: ${TWILIO_AUTH_TOKEN}
+  phone-number: ${TWILIO_PHONE_NUMBER}
 
 firebase:
   config-path: ${FIREBASE_CONFIG_PATH:}
 
 logging:
   level:
+    root: INFO
     com.natanconstrutora: DEBUG
-    org.springframework.security: DEBUG
+    org.springframework.web: INFO
+    org.hibernate: INFO
 
 springdoc:
   api-docs:

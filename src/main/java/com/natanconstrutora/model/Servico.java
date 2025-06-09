@@ -67,6 +67,8 @@ public class Servico {
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 
+    private BigDecimal precoHora;
+
     // Constructors
     public Servico() {}
 
@@ -120,4 +122,7 @@ public class Servico {
 
     public Categoria getCategoria() { return categoria; }
     public void setCategoria(Categoria categoria) { this.categoria = categoria; }
+
+    public BigDecimal getPrecoHora() { return precoHora; }
+    public void setPrecoHora(BigDecimal precoHora) { this.precoHora = precoHora; }
 }

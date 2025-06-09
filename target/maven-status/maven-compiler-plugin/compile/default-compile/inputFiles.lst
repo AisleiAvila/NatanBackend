@@ -46,8 +46,10 @@ C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutor
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\model\Cliente.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\model\Configuracao.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\model\Endereco.java
+C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\model\Funcionario.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\model\ImagemServico.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\model\ItemOrcamento.java
+C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\model\Material.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\model\Notificacao.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\model\Orcamento.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\model\Pagamento.java
@@ -72,7 +74,9 @@ C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutor
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\ClienteRepository.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\ConfiguracaoRepository.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\EnderecoRepository.java
+C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\FuncionarioRepository.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\ImagemServicoRepository.java
+C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\MaterialRepository.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\NotificacaoRepository.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\OrcamentoRepository.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\PagamentoRepository.java

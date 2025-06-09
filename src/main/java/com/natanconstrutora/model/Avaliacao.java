@@ -12,6 +12,10 @@ public class Avaliacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne
+    @JoinColumn(name = "solicitacao_id")
+    private Solicitacao solicitacao;
+
     @ManyToOne
     @JoinColumn(name = "servico_id")
     private Servico servico;
