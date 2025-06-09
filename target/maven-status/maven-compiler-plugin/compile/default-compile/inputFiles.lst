@@ -1,4 +1,5 @@
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/Solicitacao.java
+/home/runner/workspace/src/main/java/com/natanconstrutora/service/ServicoService.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/security/JwtTokenProvider.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/security/UserPrincipal.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/User.java
@@ -13,6 +14,7 @@
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/RoleName.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/repository/ServicoRepository.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/repository/UserRepository.java
+/home/runner/workspace/src/main/java/com/natanconstrutora/repository/ImagemServicoRepository.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/ImagemServico.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/repository/AvaliacaoRepository.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/Servico.java
@@ -20,10 +22,13 @@
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/ItemOrcamento.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/repository/RoleRepository.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/Role.java
+/home/runner/workspace/src/main/java/com/natanconstrutora/controller/AvaliacaoController.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/controller/TestController.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/service/UserDetailsServiceImpl.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/repository/SolicitacaoRepository.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/security/JwtAuthenticationEntryPoint.java
+/home/runner/workspace/src/main/java/com/natanconstrutora/service/SolicitacaoService.java
+/home/runner/workspace/src/main/java/com/natanconstrutora/controller/ServicoController.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/controller/SolicitacaoController.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/NatanBackendApplication.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/Regiao.java
