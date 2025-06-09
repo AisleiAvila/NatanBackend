@@ -1,9 +1,16 @@
-
 package com.natanconstrutora.controller;
 
 import com.natanconstrutora.model.Servico;
 import com.natanconstrutora.model.Regiao;
 import com.natanconstrutora.service.ServicoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,52 +22,101 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/servicos")
+@Tag(name = "Serviços", description = "APIs para gerenciamento de serviços")
+@SecurityRequirement(name = "bearer-jwt")
 public class ServicoController {
 
     @Autowired
     private ServicoService servicoService;
 
+    @Operation(summary = "Listar serviços", description = "Retorna todos os serviços cadastrados")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Serviços retornados com sucesso")
+    })
     @GetMapping
-    public List<Servico> listarTodos() {
-        return servicoService.buscarAtivos();
+    public ResponseEntity<?> listar() {
+        return ResponseEntity.ok(servicoService.listar());
     }
 
+    @Operation(summary = "Buscar serviço", description = "Retorna um serviço específico pelo ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Serviço encontrado com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Serviço não encontrado")
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<Servico> buscarPorId(@PathVariable Long id) {
-        Optional<Servico> servico = servicoService.buscarPorId(id);
-        return servico.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> buscar(
+            @Parameter(description = "ID do serviço", required = true)
+            @PathVariable Long id) {
+        return ResponseEntity.ok(servicoService.buscar(id));
     }
 
-    @GetMapping("/regiao/{regiao}")
-    public List<Servico> buscarPorRegiao(@PathVariable Regiao regiao) {
-        return servicoService.buscarPorRegiao(regiao);
-    }
-
+    @Operation(summary = "Criar serviço", description = "Cria um novo serviço (requer permissão de ADMIN)")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Serviço criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+        @ApiResponse(responseCode = "403", description = "Acesso negado - requer permissão de ADMIN")
+    })
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public Servico criar(@Valid @RequestBody Servico servico) {
-        return servicoService.salvar(servico);
+    public ResponseEntity<?> criar(
+            @Parameter(description = "Dados do serviço", required = true)
+            @RequestBody Servico servico) {
+        return ResponseEntity.status(201).body(servicoService.criar(servico));
     }
 
+    @Operation(summary = "Atualizar serviço", description = "Atualiza um serviço existente (requer permissão de ADMIN)")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Serviço atualizado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+        @ApiResponse(responseCode = "404", description = "Serviço não encontrado"),
+        @ApiResponse(responseCode = "403", description = "Acesso negado - requer permissão de ADMIN")
+    })
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Servico> atualizar(@PathVariable Long id, @Valid @RequestBody Servico servicoAtualizado) {
-        Optional<Servico> servicoExistente = servicoService.buscarPorId(id);
-        if (servicoExistente.isPresent()) {
-            servicoAtualizado.setId(id);
-            return ResponseEntity.ok(servicoService.salvar(servicoAtualizado));
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<?> atualizar(
+            @Parameter(description = "ID do serviço", required = true)
+            @PathVariable Long id,
+            @Parameter(description = "Dados do serviço", required = true)
+            @RequestBody Servico servico) {
+        return ResponseEntity.ok(servicoService.atualizar(id, servico));
     }
 
+    @Operation(summary = "Excluir serviço", description = "Remove um serviço existente (requer permissão de ADMIN)")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Serviço removido com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Serviço não encontrado"),
+        @ApiResponse(responseCode = "403", description = "Acesso negado - requer permissão de ADMIN")
+    })
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deletar(@PathVariable Long id) {
-        Optional<Servico> servico = servicoService.buscarPorId(id);
-        if (servico.isPresent()) {
-            servicoService.deletar(id);
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> excluir(
+            @Parameter(description = "ID do serviço", required = true)
+            @PathVariable Long id) {
+        servicoService.excluir(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Buscar serviços por categoria", description = "Retorna serviços de uma categoria específica")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Serviços retornados com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Categoria não encontrada")
+    })
+    @GetMapping("/categoria/{id}")
+    public ResponseEntity<?> buscarPorCategoria(
+            @Parameter(description = "ID da categoria", required = true)
+            @PathVariable Long id) {
+        return ResponseEntity.ok(servicoService.buscarPorCategoria(id));
+    }
+
+    @Operation(summary = "Buscar serviços por prestador", description = "Retorna serviços de um prestador específico")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Serviços retornados com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Prestador não encontrado")
+    })
+    @GetMapping("/prestador/{id}")
+    public ResponseEntity<?> buscarPorPrestador(
+            @Parameter(description = "ID do prestador", required = true)
+            @PathVariable Long id) {
+        return ResponseEntity.ok(servicoService.buscarPorPrestador(id));
     }
 }

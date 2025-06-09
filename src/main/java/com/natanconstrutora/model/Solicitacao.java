@@ -1,4 +1,3 @@
-
 package com.natanconstrutora.model;
 
 import jakarta.persistence.*;
@@ -43,7 +42,7 @@ public class Solicitacao {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Regiao regiao;
+    private RegiaoEnum regiao;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -71,7 +70,7 @@ public class Solicitacao {
     // Constructors
     public Solicitacao() {}
 
-    public Solicitacao(User cliente, Servico servico, String descricaoProblema, String endereco, Regiao regiao) {
+    public Solicitacao(User cliente, Servico servico, String descricaoProblema, String endereco, RegiaoEnum regiao) {
         this.cliente = cliente;
         this.servico = servico;
         this.descricaoProblema = descricaoProblema;
@@ -98,8 +97,8 @@ public class Solicitacao {
     public String getEndereco() { return endereco; }
     public void setEndereco(String endereco) { this.endereco = endereco; }
 
-    public Regiao getRegiao() { return regiao; }
-    public void setRegiao(Regiao regiao) { this.regiao = regiao; }
+    public RegiaoEnum getRegiao() { return regiao; }
+    public void setRegiao(RegiaoEnum regiao) { this.regiao = regiao; }
 
     public StatusSolicitacao getStatus() { return status; }
     public void setStatus(StatusSolicitacao status) { this.status = status; }

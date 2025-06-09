@@ -1,4 +1,3 @@
-
 package com.natanconstrutora.service;
 
 import com.natanconstrutora.model.*;
@@ -35,7 +34,7 @@ public class SolicitacaoService {
         return solicitacaoRepository.findByStatus(status);
     }
 
-    public List<Solicitacao> buscarPorRegiao(Regiao regiao) {
+    public List<Solicitacao> buscarPorRegiao(RegiaoEnum regiao) {
         return solicitacaoRepository.findByRegiao(regiao);
     }
 
@@ -48,7 +47,7 @@ public class SolicitacaoService {
     }
 
     @Transactional
-    public Solicitacao criarSolicitacao(Long clienteId, Long servicoId, String descricaoProblema, String endereco, Regiao regiao) {
+    public Solicitacao criarSolicitacao(Long clienteId, Long servicoId, String descricaoProblema, String endereco, RegiaoEnum regiao) {
         User cliente = userRepository.findById(clienteId)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
         

@@ -6,11 +6,13 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "servicos")
 public class Servico {
@@ -30,11 +32,11 @@ public class Servico {
 
     private String imagemUrl;
 
-    @ElementCollection(targetClass = Regiao.class)
+    @ElementCollection(targetClass = RegiaoEnum.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "servico_regioes", joinColumns = @JoinColumn(name = "servico_id"))
     @Column(name = "regiao")
-    private Set<Regiao> regioesAtendimento;
+    private Set<RegiaoEnum> regioesAtendimento;
 
     private Boolean ativo = true;
 
@@ -43,6 +45,27 @@ public class Servico {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @Column(nullable = false)
+    private String status;
+
+    @Column(nullable = false)
+    private LocalDateTime dataCriacao;
+
+    @Column
+    private LocalDateTime dataConclusao;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "prestador_id", nullable = false)
+    private Prestador prestador;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = false)
+    private Categoria categoria;
 
     // Constructors
     public Servico() {}
@@ -68,8 +91,8 @@ public class Servico {
     public String getImagemUrl() { return imagemUrl; }
     public void setImagemUrl(String imagemUrl) { this.imagemUrl = imagemUrl; }
 
-    public Set<Regiao> getRegioesAtendimento() { return regioesAtendimento; }
-    public void setRegioesAtendimento(Set<Regiao> regioesAtendimento) { this.regioesAtendimento = regioesAtendimento; }
+    public Set<RegiaoEnum> getRegioesAtendimento() { return regioesAtendimento; }
+    public void setRegioesAtendimento(Set<RegiaoEnum> regioesAtendimento) { this.regioesAtendimento = regioesAtendimento; }
 
     public Boolean getAtivo() { return ativo; }
     public void setAtivo(Boolean ativo) { this.ativo = ativo; }
@@ -79,4 +102,22 @@ public class Servico {
 
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public LocalDateTime getDataCriacao() { return dataCriacao; }
+    public void setDataCriacao(LocalDateTime dataCriacao) { this.dataCriacao = dataCriacao; }
+
+    public LocalDateTime getDataConclusao() { return dataConclusao; }
+    public void setDataConclusao(LocalDateTime dataConclusao) { this.dataConclusao = dataConclusao; }
+
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
+
+    public Prestador getPrestador() { return prestador; }
+    public void setPrestador(Prestador prestador) { this.prestador = prestador; }
+
+    public Categoria getCategoria() { return categoria; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
 }

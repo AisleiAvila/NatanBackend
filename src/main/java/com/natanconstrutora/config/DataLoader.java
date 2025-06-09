@@ -49,21 +49,21 @@ public class DataLoader implements CommandLineRunner {
             User cliente = new User("joao", "joao@email.com", passwordEncoder.encode("123456"), "João Silva");
             cliente.setTelefone("912345678");
             cliente.setEndereco("Rua das Flores, 123, Aveiro");
-            cliente.setRegiao(Regiao.AVEIRO);
+            cliente.setRegiao(RegiaoEnum.AVEIRO);
             cliente.setRoles(Set.of(roleCliente));
 
             // Prestador
             User prestador = new User("pedro", "pedro@email.com", passwordEncoder.encode("123456"), "Pedro Santos");
             prestador.setTelefone("913456789");
             prestador.setEndereco("Rua das Oliveiras, 456, Coimbra");
-            prestador.setRegiao(Regiao.COIMBRA);
+            prestador.setRegiao(RegiaoEnum.COIMBRA);
             prestador.setRoles(Set.of(rolePrestador));
 
             // Admin
             User admin = new User("admin", "admin@natanconstrutora.com", passwordEncoder.encode("admin123"), "Administrador");
             admin.setTelefone("914567890");
             admin.setEndereco("Sede da Empresa");
-            admin.setRegiao(Regiao.SAO_MIGUEL);
+            admin.setRegiao(RegiaoEnum.SAO_MIGUEL);
             admin.setRoles(Set.of(roleAdmin));
 
             userRepository.saveAll(Arrays.asList(cliente, prestador, admin));
@@ -75,14 +75,14 @@ public class DataLoader implements CommandLineRunner {
             servico1.setNome("Reparação de Torneiras");
             servico1.setDescricao("Conserto e substituição de torneiras domésticas");
             servico1.setPrecoTabelado(new BigDecimal("50.00"));
-            servico1.setRegioesAtendimento(Set.of(Regiao.AVEIRO, Regiao.COIMBRA));
+            servico1.setRegioesAtendimento(Set.of(RegiaoEnum.AVEIRO, RegiaoEnum.COIMBRA));
             servico1.setAtivo(true);
 
             Servico servico2 = new Servico();
             servico2.setNome("Instalação Elétrica");
             servico2.setDescricao("Instalação e manutenção de sistemas elétricos");
             servico2.setPrecoTabelado(new BigDecimal("120.00"));
-            servico2.setRegioesAtendimento(Set.of(Regiao.SAO_MIGUEL, Regiao.AVEIRO, Regiao.COIMBRA));
+            servico2.setRegioesAtendimento(Set.of(RegiaoEnum.SAO_MIGUEL, RegiaoEnum.AVEIRO, RegiaoEnum.COIMBRA));
             servico2.setAtivo(true);
 
             servicoRepository.saveAll(Arrays.asList(servico1, servico2));
@@ -96,7 +96,7 @@ public class DataLoader implements CommandLineRunner {
             Solicitacao solicitacao1 = new Solicitacao(cliente, servico,
                     "A torneira da cozinha está a pingar constantemente",
                     "Rua das Flores, 456, Aveiro",
-                    Regiao.AVEIRO);
+                    RegiaoEnum.AVEIRO);
 
             solicitacaoRepository.save(solicitacao1);
         }

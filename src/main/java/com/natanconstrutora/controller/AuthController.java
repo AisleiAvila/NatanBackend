@@ -1,97 +1,60 @@
 package com.natanconstrutora.controller;
 
 import com.natanconstrutora.dto.LoginRequest;
-import com.natanconstrutora.dto.SignUpRequest;
-import com.natanconstrutora.model.Role;
-import com.natanconstrutora.model.RoleName;
-import com.natanconstrutora.model.User;
-import com.natanconstrutora.repository.RoleRepository;
-import com.natanconstrutora.repository.UserRepository;
-import com.natanconstrutora.security.JwtTokenProvider;
+import com.natanconstrutora.dto.LoginResponse;
+import com.natanconstrutora.dto.RefreshTokenRequest;
+import com.natanconstrutora.dto.RefreshTokenResponse;
+import com.natanconstrutora.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "Autenticação", description = "APIs para autenticação e gerenciamento de tokens")
 public class AuthController {
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthService authService;
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
-    JwtTokenProvider tokenProvider;
-
-    @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String jwt = tokenProvider.generateToken(authentication);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("accessToken", jwt);
-        response.put("tokenType", "Bearer");
-
-        return ResponseEntity.ok(response);
+    @Operation(summary = "Realizar login", description = "Autentica um usuário e retorna um token JWT")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
+    })
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(
+            @Parameter(description = "Credenciais de login", required = true)
+            @RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(authService.login(loginRequest));
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignUpRequest signUpRequest) {
-        if(userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity.badRequest()
-                    .body(Map.of("message", "Error: Username is already taken!"));
-        }
-
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity.badRequest()
-                    .body(Map.of("message", "Error: Email is already in use!"));
-        }
-
-        // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
-                             signUpRequest.getEmail(),
-                             passwordEncoder.encode(signUpRequest.getPassword()),
-                             signUpRequest.getNome());
-
-        user.setTelefone(signUpRequest.getTelefone());
-        user.setEndereco(signUpRequest.getEndereco());
-
-        Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName(RoleName.ROLE_CLIENTE)
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        roles.add(userRole);
-
-        user.setRoles(roles);
-        userRepository.save(user);
-
-        return ResponseEntity.ok(Map.of("message", "User registered successfully!"));
+    @Operation(summary = "Renovar token", description = "Renova um token JWT usando o refresh token")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Token renovado com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Refresh token inválido ou expirado")
+    })
+    @PostMapping("/refresh")
+    public ResponseEntity<RefreshTokenResponse> refreshToken(
+            @Parameter(description = "Refresh token", required = true)
+            @RequestBody RefreshTokenRequest refreshTokenRequest) {
+        return ResponseEntity.ok(authService.refreshToken(refreshTokenRequest.getRefreshToken()));
     }
 
-    
+    @Operation(summary = "Realizar logout", description = "Invalida o token JWT atual")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Logout realizado com sucesso")
+    })
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout() {
+        authService.logout();
+        return ResponseEntity.ok().build();
+    }
 }

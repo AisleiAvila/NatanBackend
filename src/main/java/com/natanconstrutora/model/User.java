@@ -1,4 +1,3 @@
-
 package com.natanconstrutora.model;
 
 import jakarta.persistence.*;
@@ -45,7 +44,7 @@ public class User {
     private String endereco;
 
     @Enumerated(EnumType.STRING)
-    private Regiao regiao;
+    private RegiaoEnum regiao;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -91,8 +90,8 @@ public class User {
     public String getEndereco() { return endereco; }
     public void setEndereco(String endereco) { this.endereco = endereco; }
 
-    public Regiao getRegiao() { return regiao; }
-    public void setRegiao(Regiao regiao) { this.regiao = regiao; }
+    public RegiaoEnum getRegiao() { return regiao; }
+    public void setRegiao(RegiaoEnum regiao) { this.regiao = regiao; }
 
     public Set<Role> getRoles() { return roles; }
     public void setRoles(Set<Role> roles) { this.roles = roles; }

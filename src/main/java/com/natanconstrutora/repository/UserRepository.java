@@ -1,7 +1,7 @@
 package com.natanconstrutora.repository;
 
 import com.natanconstrutora.model.User;
-import com.natanconstrutora.model.Regiao;
+import com.natanconstrutora.model.RegiaoEnum;
 import com.natanconstrutora.model.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,7 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByRoleName(@Param("roleName") RoleName roleName);
 
     @Query("SELECT u FROM User u JOIN u.roles r WHERE r.name = :roleName AND u.regiao = :regiao")
-    List<User> findPrestadoresByRegiao(@Param("roleName") RoleName roleName, @Param("regiao") Regiao regiao);
+    List<User> findPrestadoresByRegiao(@Param("roleName") RoleName roleName, @Param("regiao") RegiaoEnum regiao);
 
-    List<User> findByRegiao(Regiao regiao);
+    List<User> findByRegiao(RegiaoEnum regiao);
 }
