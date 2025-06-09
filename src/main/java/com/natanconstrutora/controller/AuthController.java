@@ -93,50 +93,5 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("message", "User registered successfully!"));
     }
 
-    // Inner classes for request bodies
-    public static class LoginRequest {
-        private String username;
-        private String password;
-
-        public String getUsername() { return username; }
-        public void setUsername(String username) { this.username = username; }
-
-        public String getPassword() { return password; }
-        public void setPassword(String password) { this.password = password; }
-    }
-
-    public static class SignUpRequest {
-        private String nome;
-        private String username;
-        private String email;
-        private String password;
-        private String telefone;
-        private String endereco;
-
-        public String getNome() { return nome; }
-        public void setNome(String nome) { this.nome = nome; }
-
-        public String getUsername() { return username; }
-        public void setUsername(String username) { this.username = username; }
-
-        public String getEmail() { return email; }
-        public void setEmail(String email) { this.email = email; }
-
-        public String getPassword() { return password; }
-        public void setPassword(String password) { this.password = password; }
-
-        public String getTelefone() { return telefone; }
-
-        public void setTelefone(String telefone) {
-            this.telefone = telefone;
-        }
-
-        public String getEndereco() {
-            return endereco;
-        }
-
-        public void setEndereco(String endereco) {
-            this.endereco = endereco;
-        }
-    }
+    
 }

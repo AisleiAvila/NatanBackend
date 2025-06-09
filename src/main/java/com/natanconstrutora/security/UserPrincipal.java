@@ -1,3 +1,4 @@
+
 package com.natanconstrutora.security;
 
 import com.natanconstrutora.model.User;
@@ -11,16 +12,13 @@ import java.util.stream.Collectors;
 
 public class UserPrincipal implements UserDetails {
     private Long id;
-    private String nome;
     private String username;
     private String email;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String nome, String username, String email, String password, 
-                        Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Long id, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.nome = nome;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -34,7 +32,6 @@ public class UserPrincipal implements UserDetails {
 
         return new UserPrincipal(
                 user.getId(),
-                user.getNome(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
@@ -42,27 +39,46 @@ public class UserPrincipal implements UserDetails {
         );
     }
 
-    public Long getId() { return id; }
-    public String getNome() { return nome; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 
     @Override
-    public String getUsername() { return username; }
+    public String getUsername() {
+        return username;
+    }
 
     @Override
-    public String getPassword() { return password; }
+    public String getPassword() {
+        return password;
+    }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() { return authorities; }
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
 
     @Override
-    public boolean isAccountNonExpired() { return true; }
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
     @Override
-    public boolean isAccountNonLocked() { return true; }
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
     @Override
-    public boolean isCredentialsNonExpired() { return true; }
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
     @Override
-    public boolean isEnabled() { return true; }
+    public boolean isEnabled() {
+        return true;
+    }
 }
