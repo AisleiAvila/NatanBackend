@@ -64,6 +64,7 @@ run = ["java", "-classpath", ".:target/dependency/*", "Main"]
 deploymentTarget = "cloudrun"
 
 [workflows]
+runButton = "Run Spring Boot"
 
 [[workflows.workflow]]
 name = "Run Spring Boot"

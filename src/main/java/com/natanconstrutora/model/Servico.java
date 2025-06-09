@@ -55,6 +55,12 @@ public class Servico {
         this.descricao = descricao;
     }
 
+    public Servico(String nome, String descricao, BigDecimal precoTabelado) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.precoTabelado = precoTabelado;
+    }
+
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -79,6 +85,9 @@ public class Servico {
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public Set<Regiao> getRegioes() { return regioes; }
+    public void setRegioes(Set<Regiao> regioes) { this.regioes = regioes; }
 
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }

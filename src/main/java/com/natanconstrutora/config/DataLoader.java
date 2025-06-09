@@ -1,4 +1,3 @@
-
 package com.natanconstrutora.config;
 
 import com.natanconstrutora.model.*;
@@ -92,11 +91,10 @@ public class DataLoader implements CommandLineRunner {
             servico2.setRegioes(Set.of(Regiao.AVEIRO, Regiao.COIMBRA, Regiao.SAO_MIGUEL));
             servico2.setAtivo(true);
 
-            Servico servico3 = new Servico("Pintura de Parede", 
-                                         "Pintura interior e exterior de paredes",
+            Servico servico3 = new Servico("Instalação de Tomadas", 
+                                         "Instalação de novas tomadas elétricas",
                                          new BigDecimal("35.00"));
-            servico3.setRegioes(Set.of(Regiao.COIMBRA));
-            servico3.setAtivo(true);
+            servico3.setRegioes(Set.of(Regiao.SAO_MIGUEL, Regiao.AVEIRO, Regiao.COIMBRA));
 
             servicoRepository.saveAll(Arrays.asList(servico1, servico2, servico3));
         }
