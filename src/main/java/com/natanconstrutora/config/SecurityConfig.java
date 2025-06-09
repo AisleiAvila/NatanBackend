@@ -67,7 +67,9 @@ public class SecurityConfig {
                     "/api/servicos/**",
                     "/h2-console/**",
                     "/swagger-ui/**",
-                    "/v3/api-docs/**"
+                    "/swagger-ui.html",
+                    "/v3/api-docs/**",
+                    "/v3/api-docs.yaml"
                 ).permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/prestador/**").hasAnyRole("PRESTADOR", "ADMIN")

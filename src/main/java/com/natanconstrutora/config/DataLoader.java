@@ -83,7 +83,7 @@ public class DataLoader implements CommandLineRunner {
         cliente1.setEmail("joao@email.com");
         cliente1.setTelefone("(11) 99999-9999");
         cliente1.setNif("123456789");
-        cliente1.setRegiao(RegiaoEnum.SUDESTE);
+        cliente1.setRegiao(RegiaoEnum.ACORES);
         clienteRepository.save(cliente1);
 
         Cliente cliente2 = new Cliente();
@@ -91,7 +91,7 @@ public class DataLoader implements CommandLineRunner {
         cliente2.setEmail("maria@email.com");
         cliente2.setTelefone("(11) 88888-8888");
         cliente2.setNif("987654321");
-        cliente2.setRegiao(RegiaoEnum.NORDESTE);
+        cliente2.setRegiao(RegiaoEnum.ALENTEJO);
         clienteRepository.save(cliente2);
 
         Cliente cliente3 = new Cliente();
@@ -99,7 +99,7 @@ public class DataLoader implements CommandLineRunner {
         cliente3.setEmail("pedro@email.com");
         cliente3.setTelefone("(11) 77777-7777");
         cliente3.setNif("456789123");
-        cliente3.setRegiao(RegiaoEnum.SUL);
+        cliente3.setRegiao(RegiaoEnum.LISBOA);
         clienteRepository.save(cliente3);
 
         // Criar funcionários
@@ -142,7 +142,7 @@ public class DataLoader implements CommandLineRunner {
         prestador1.setNif("123456781");
         prestador1.setDescricao("Especialista em construção civil");
         prestador1.setAvaliacaoMedia(4.5);
-        prestador1.setRegiao(RegiaoEnum.SUDESTE);
+        prestador1.setRegiao(RegiaoEnum.MADEIRA);
         prestador1.setDataCadastro(LocalDateTime.now());
         prestadorRepository.save(prestador1);
 
