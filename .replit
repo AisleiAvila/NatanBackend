@@ -78,3 +78,7 @@ args = "mvn clean install -DskipTests"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "java -jar target/natan-backend-1.0.0.jar"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
