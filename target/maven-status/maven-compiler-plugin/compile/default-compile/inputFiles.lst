@@ -30,6 +30,7 @@
 /home/runner/workspace/src/main/java/com/natanconstrutora/service/SolicitacaoService.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/controller/ServicoController.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/controller/SolicitacaoController.java
+/home/runner/workspace/src/main/java/com/natanconstrutora/controller/AuthController.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/NatanBackendApplication.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/Regiao.java
 /home/runner/workspace/src/main/java/com/natanconstrutora/model/Avaliacao.java
