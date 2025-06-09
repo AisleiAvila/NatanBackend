@@ -1,0 +1,63 @@
+
+server:
+  port: 5000
+  address: 0.0.0.0
+
+spring:
+  application:
+    name: natan-backend
+  
+  datasource:
+    url: jdbc:h2:mem:natandb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+    
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+        
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+jwt:
+  secret: ${JWT_SECRET:natanConstructoraSecretKey2024}
+  expiration: 86400000 # 24 hours
+
+iva:
+  rate: 0.23 # 23% IVA rate
+
+prestador:
+  percentage: 0.70 # 70% for service providers
+
+twilio:
+  account-sid: ${TWILIO_ACCOUNT_SID:}
+  auth-token: ${TWILIO_AUTH_TOKEN:}
+  phone-number: ${TWILIO_PHONE_NUMBER:}
+
+firebase:
+  config-path: ${FIREBASE_CONFIG_PATH:}
+
+logging:
+  level:
+    com.natanconstrutora: DEBUG
+    org.springframework.security: DEBUG
