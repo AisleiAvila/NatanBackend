@@ -2,22 +2,21 @@ package com.natanconstrutora.repository;
 
 import com.natanconstrutora.model.Prestador;
 import com.natanconstrutora.model.RegiaoEnum;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 @Repository
 public interface PrestadorRepository extends JpaRepository<Prestador, Long> {
     Optional<Prestador> findByEmail(String email);
-    Optional<Prestador> findByCpf(String cpf);
+    Optional<Prestador> findByNif(String nif);
     boolean existsByEmail(String email);
-    boolean existsByCpf(String cpf);
+    boolean existsByNif(String nif);
     List<Prestador> findByNomeContainingIgnoreCase(String nome);
     List<Prestador> findByAvaliacaoMediaGreaterThanEqual(Double avaliacaoMedia);
     List<Prestador> findByCategoriasId(Long categoriaId);

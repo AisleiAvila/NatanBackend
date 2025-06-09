@@ -3,12 +3,11 @@ package com.natanconstrutora.service;
 import com.natanconstrutora.model.Prestador;
 import com.natanconstrutora.model.RegiaoEnum;
 import com.natanconstrutora.repository.PrestadorRepository;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PrestadorService {
@@ -28,8 +27,8 @@ public class PrestadorService {
         return prestadorRepository.findByEmail(email);
     }
 
-    public Optional<Prestador> buscarPorCpf(String cpf) {
-        return prestadorRepository.findByCpf(cpf);
+    public Optional<Prestador> buscarPorNif(String nif) {
+        return prestadorRepository.findByNif(nif);
     }
 
     public List<Prestador> buscarPorNome(String nome) {
@@ -41,8 +40,8 @@ public class PrestadorService {
         if (prestadorRepository.existsByEmail(prestador.getEmail())) {
             throw new RuntimeException("Email já cadastrado");
         }
-        if (prestadorRepository.existsByCpf(prestador.getCpf())) {
-            throw new RuntimeException("CPF já cadastrado");
+        if (prestadorRepository.existsByNif(prestador.getNif())) {
+            throw new RuntimeException("NIF já cadastrado");
         }
         return prestadorRepository.save(prestador);
     }
@@ -58,9 +57,9 @@ public class PrestadorService {
             throw new RuntimeException("Email já cadastrado");
         }
 
-        prestadorExistente = prestadorRepository.findByCpf(prestador.getCpf());
+        prestadorExistente = prestadorRepository.findByNif(prestador.getNif());
         if (prestadorExistente.isPresent() && !prestadorExistente.get().getId().equals(id)) {
-            throw new RuntimeException("CPF já cadastrado");
+            throw new RuntimeException("NIF já cadastrado");
         }
 
         prestador.setId(id);

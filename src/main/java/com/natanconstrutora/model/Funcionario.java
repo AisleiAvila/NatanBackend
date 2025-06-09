@@ -1,6 +1,9 @@
 package com.natanconstrutora.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import java.math.BigDecimal;
 
 @Entity
@@ -12,7 +15,7 @@ public class Funcionario {
     private String nome;
     private String email;
     private String telefone;
-    private String cpf;
+    private String nif;
     private String cargo;
     private BigDecimal salario;
 
@@ -29,12 +32,12 @@ public class Funcionario {
     public String getTelefone() { return telefone; }
     public void setTelefone(String telefone) { this.telefone = telefone; }
     
-    public String getCpf() { return cpf; }
-    public void setCpf(String cpf) { this.cpf = cpf; }
-    
+    public String getNif() { return nif; }
+    public void setNif(String nif) { this.nif = nif; }
+
     public String getCargo() { return cargo; }
     public void setCargo(String cargo) { this.cargo = cargo; }
     
     public BigDecimal getSalario() { return salario; }
     public void setSalario(BigDecimal salario) { this.salario = salario; }
-} 
+}

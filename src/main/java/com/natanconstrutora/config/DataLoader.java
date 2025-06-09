@@ -82,7 +82,7 @@ public class DataLoader implements CommandLineRunner {
         cliente1.setNome("João Silva");
         cliente1.setEmail("joao@email.com");
         cliente1.setTelefone("(11) 99999-9999");
-        cliente1.setCpf("123.456.789-00");
+        cliente1.setNif("123456789");
         cliente1.setRegiao(RegiaoEnum.SUDESTE);
         clienteRepository.save(cliente1);
 
@@ -90,7 +90,7 @@ public class DataLoader implements CommandLineRunner {
         cliente2.setNome("Maria Santos");
         cliente2.setEmail("maria@email.com");
         cliente2.setTelefone("(11) 88888-8888");
-        cliente2.setCpf("987.654.321-00");
+        cliente2.setNif("987654321");
         cliente2.setRegiao(RegiaoEnum.NORDESTE);
         clienteRepository.save(cliente2);
 
@@ -98,7 +98,7 @@ public class DataLoader implements CommandLineRunner {
         cliente3.setNome("Pedro Oliveira");
         cliente3.setEmail("pedro@email.com");
         cliente3.setTelefone("(11) 77777-7777");
-        cliente3.setCpf("456.789.123-00");
+        cliente3.setNif("456789123");
         cliente3.setRegiao(RegiaoEnum.SUL);
         clienteRepository.save(cliente3);
 
@@ -107,7 +107,7 @@ public class DataLoader implements CommandLineRunner {
         funcionario1.setNome("Carlos Souza");
         funcionario1.setEmail("carlos@email.com");
         funcionario1.setTelefone("(11) 66666-6666");
-        funcionario1.setCpf("789.123.456-00");
+        funcionario1.setNif("789123456");
         funcionario1.setCargo("Pedreiro");
         funcionario1.setSalario(new BigDecimal("2500.00"));
         funcionarioRepository.save(funcionario1);
@@ -139,7 +139,7 @@ public class DataLoader implements CommandLineRunner {
         prestador1.setNome("José Pereira");
         prestador1.setEmail("jose@prestador.com");
         prestador1.setTelefone("(11) 55555-5555");
-        prestador1.setCpf("123.456.789-01");
+        prestador1.setNif("123456781");
         prestador1.setDescricao("Especialista em construção civil");
         prestador1.setAvaliacaoMedia(4.5);
         prestador1.setRegiao(RegiaoEnum.SUDESTE);

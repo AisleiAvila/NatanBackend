@@ -3,14 +3,13 @@ package com.natanconstrutora.service;
 import com.natanconstrutora.model.Cliente;
 import com.natanconstrutora.model.RegiaoEnum;
 import com.natanconstrutora.repository.ClienteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ClienteService {
@@ -30,8 +29,8 @@ public class ClienteService {
         return clienteRepository.findByEmail(email);
     }
 
-    public Optional<Cliente> buscarPorCpf(String cpf) {
-        return clienteRepository.findByCpf(cpf);
+    public Optional<Cliente> buscarPorNif(String nif) {
+        return clienteRepository.findByNif(nif);
     }
 
     public List<Cliente> buscarPorNome(String nome) {
@@ -47,8 +46,8 @@ public class ClienteService {
         if (clienteRepository.existsByEmail(cliente.getEmail())) {
             throw new RuntimeException("Email já cadastrado");
         }
-        if (clienteRepository.existsByCpf(cliente.getCpf())) {
-            throw new RuntimeException("CPF já cadastrado");
+        if (clienteRepository.existsByNif(cliente.getNif())) {
+            throw new RuntimeException("NIF já cadastrado");
         }
         return clienteRepository.save(cliente);
     }
@@ -100,4 +99,4 @@ public class ClienteService {
     public List<Map<String, Object>> contarClientesPorRegiao(LocalDateTime inicio, LocalDateTime fim) {
         return clienteRepository.findClientesPorRegiao(inicio, fim);
     }
-} 
+}
