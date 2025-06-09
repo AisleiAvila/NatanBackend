@@ -1,4 +1,3 @@
-
 package com.natanconstrutora.controller;
 
 import com.natanconstrutora.dto.LoginRequest;
@@ -54,11 +53,11 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        
+
         Map<String, Object> response = new HashMap<>();
         response.put("accessToken", jwt);
         response.put("tokenType", "Bearer");
-        
+
         return ResponseEntity.ok(response);
     }
 
@@ -84,31 +83,11 @@ public class AuthController {
         user.setEndereco(signUpRequest.getEndereco());
 
         Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName(RoleName.ROLE_CLIENT)
+        Role userRole = roleRepository.findByName(RoleName.ROLE_CLIENTE)
                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
         roles.add(userRole);
 
         user.setRoles(roles);
-        userRepository.save(user);
-
-        return ResponseEntity.ok(Map.of("message", "User registered successfully!"));
-    }
-
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity.badRequest()
-                    .body(Map.of("message", "Error: Email is already in use!"));
-        }
-
-        // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
-                           signUpRequest.getEmail(),
-                           passwordEncoder.encode(signUpRequest.getPassword()),
-                           signUpRequest.getNome());
-
-        Role userRole = roleRepository.findByName(RoleName.ROLE_CLIENTE)
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        user.setRoles(Set.of(userRole));
-
         userRepository.save(user);
 
         return ResponseEntity.ok(Map.of("message", "User registered successfully!"));
@@ -131,6 +110,8 @@ public class AuthController {
         private String username;
         private String email;
         private String password;
+        private String telefone;
+        private String endereco;
 
         public String getNome() { return nome; }
         public void setNome(String nome) { this.nome = nome; }
@@ -143,5 +124,19 @@ public class AuthController {
 
         public String getPassword() { return password; }
         public void setPassword(String password) { this.password = password; }
+
+        public String getTelefone() { return telefone; }
+
+        public void setTelefone(String telefone) {
+            this.telefone = telefone;
+        }
+
+        public String getEndereco() {
+            return endereco;
+        }
+
+        public void setEndereco(String endereco) {
+            this.endereco = endereco;
+        }
     }
 }
