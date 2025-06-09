@@ -1,0 +1,101 @@
+A aplicação backend fará parte uma plataforma digital chamada **Natan Construtora**, acessível via site e aplicativo. A plataforma conecta clientes que precisam de serviços técnicos (pequenos reparos, instalações e manutenção) a prestadores de serviço autorizados nas regiões de São Miguel (Açores), Aveiro e Coimbra. 
+
+## 1. Objetivo
+O objetivo do backend é:
+- Gerenciar solicitações de serviço feitas pelos clientes.
+- Permitir ao administrador criar orçamentos detalhados com cálculo automático de IVA.
+- Facilitar a atribuição de prestadores com base em disponibilidade, localização e avaliação.
+- Registrar imagens "antes/depois" dos serviços.
+- Armazenar avaliações pós-serviço vinculadas aos serviços e aos prestadores.
+- Garantir segurança, conformidade com GDPR e comunicação eficiente entre os módulos.
+
+## 2. Requisitos Funcionais - Backend
+
+### 2.1 Gestão de Usuários
+- Autenticação JWT ou OAuth2 com Spring Security.
+- Níveis de acesso:
+  - Cliente (leitura)
+  - Prestador (leitura/escrita limitada)
+  - Admin (acesso completo)
+
+### 2.2 Gestão de Serviços
+- CRUD completo para cadastro de serviços oferecidos pela empresa.
+- Cada serviço possui:
+  - Nome
+  - Descrição breve
+  - Preço tabelado (opcional)
+  - Imagem ilustrativa (opcional)
+  - Região de atendimento
+
+### 2.3 Gestão de Solicitações
+- Listagem de todas as solicitações com filtros por:
+  - Data
+  - Status (ex: Aguardando Orçamento, Aprovado, Concluído)
+  - Região
+- Função de geração de orçamento:
+  - Interface para adicionar múltiplos itens (serviços ou materiais)
+  - Para cada item:
+    - Descrição
+    - Quantidade
+    - Preço unitário
+    - Subtotal por item
+  - Sistema calcula automaticamente:
+    - Subtotal geral
+    - Taxa de IVA (padrão editável)
+    - Total final (com IVA)
+  - Definir data de validade do orçamento
+  - Enviar orçamento ao cliente (e-mail/notificação)
+- Após aprovação pelo cliente:
+  - Sugestão automática de prestadores disponíveis
+  - Atribuição manual de prestador pelo admin
+  - Envio de notificações (e-mail/WhatsApp/SMS) ao cliente e ao prestador
+- Atualização de status:
+  - Exemplos: Aguardando Orçamento → Aguardando Aprovação → Em Andamento → Concluído
+
+### 2.4 Dashboard Analítico
+- Visão geral com métricas:
+  - Número de solicitações
+  - Serviços em andamento por região
+  - Receita estimada
+  - Avaliação média dos prestadores
+  - Histórico de serviços concluídos
+
+### 2.5 Repasse Financeiro aos Prestadores
+- O sistema deve calcular automaticamente:
+  - 70% do valor do serviço (já descontado o IVA)
+- Exibir esse valor líquido na tela de detalhes do serviço
+- Permitir ajustes manuais no percentual repassado ao prestador, se necessário
+
+### 2.6 Upload de Imagens Antes/Depois
+- Armazenar imagens fornecidas pelos prestadores após a conclusão do serviço
+- Vincular imagens aos respectivos serviços
+- Validar formato e tamanho das imagens
+
+### 2.7 Avaliações Pós-Serviço
+- Armazenar avaliações (nota de 1 a 5 estrelas + comentário opcional)
+- Vincular avaliações ao serviço e ao prestador
+- Mostrar histórico de avaliações no perfil do prestador
+
+### 2.8 Integrações Externas
+- WhatsApp Business API – para notificações
+- Twilio (ou similar) – para envio de SMS
+- Google Maps JavaScript API – para exibição de endereços
+
+### 2.9 Geração de PDF
+- Criar orçamentos em formato PDF
+- Utilizar bibliotecas como iText ou Apache PDFBox
+- Incluir dados da empresa, cliente, itens do serviço, subtotal, IVA e total
+
+### 2.10 Segurança
+- Proteção contra vulnerabilidades OWASP Top 10
+- Conformidade com o GDPR
+- Logs de auditoria para ações críticas
+
+## 3. Tecnologias
+- Linguagem: Java
+- Framework: Spring Boot + JOOQ
+- Banco de Dados: H2
+- Armazenamento de imagens: H2
+- Autenticação: JWT ou OAuth2
+- Notificações Push: Firebase Cloud Messaging (FCM)
+- Geração de PDF: iText ou Apache PDFBox
