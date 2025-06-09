@@ -1,3 +1,4 @@
+
 package com.natanconstrutora.model;
 
 import jakarta.persistence.*;
@@ -22,17 +23,12 @@ public class ImagemServico {
 
     @NotBlank
     @Size(max = 500)
-    private String nomeArquivo;
+    private String url;
 
-    @NotBlank
-    @Size(max = 500)
-    private String caminhoArquivo;
-
-    @NotNull
     @Enumerated(EnumType.STRING)
     private TipoImagem tipo;
 
-    @Size(max = 500)
+    @Size(max = 200)
     private String descricao;
 
     @CreationTimestamp
@@ -41,10 +37,9 @@ public class ImagemServico {
     // Constructors
     public ImagemServico() {}
 
-    public ImagemServico(Solicitacao solicitacao, String nomeArquivo, String caminhoArquivo, TipoImagem tipo) {
+    public ImagemServico(Solicitacao solicitacao, String url, TipoImagem tipo) {
         this.solicitacao = solicitacao;
-        this.nomeArquivo = nomeArquivo;
-        this.caminhoArquivo = caminhoArquivo;
+        this.url = url;
         this.tipo = tipo;
     }
 
@@ -55,11 +50,8 @@ public class ImagemServico {
     public Solicitacao getSolicitacao() { return solicitacao; }
     public void setSolicitacao(Solicitacao solicitacao) { this.solicitacao = solicitacao; }
 
-    public String getNomeArquivo() { return nomeArquivo; }
-    public void setNomeArquivo(String nomeArquivo) { this.nomeArquivo = nomeArquivo; }
-
-    public String getCaminhoArquivo() { return caminhoArquivo; }
-    public void setCaminhoArquivo(String caminhoArquivo) { this.caminhoArquivo = caminhoArquivo; }
+    public String getUrl() { return url; }
+    public void setUrl(String url) { this.url = url; }
 
     public TipoImagem getTipo() { return tipo; }
     public void setTipo(TipoImagem tipo) { this.tipo = tipo; }

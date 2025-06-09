@@ -1,4 +1,3 @@
-
 package com.natanconstrutora.model;
 
 import jakarta.persistence.*;
@@ -27,18 +26,16 @@ public class Servico {
     private String descricao;
 
     @PositiveOrZero
-    @Column(precision = 10, scale = 2)
     private BigDecimal precoTabelado;
 
-    @Size(max = 255)
     private String imagemUrl;
 
     @ElementCollection(targetClass = Regiao.class)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "servico_regioes")
+    @CollectionTable(name = "servico_regioes", joinColumns = @JoinColumn(name = "servico_id"))
+    @Column(name = "regiao")
     private Set<Regiao> regioesAtendimento;
 
-    @Column(nullable = false)
     private Boolean ativo = true;
 
     @CreationTimestamp
@@ -53,12 +50,6 @@ public class Servico {
     public Servico(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
-    }
-
-    public Servico(String nome, String descricao, BigDecimal precoTabelado) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.precoTabelado = precoTabelado;
     }
 
     // Getters and Setters
@@ -85,9 +76,6 @@ public class Servico {
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-
-    public Set<Regiao> getRegioes() { return regioesAtendimento; }
-    public void setRegioes(Set<Regiao> regioes) { this.regioesAtendimento = regioes; }
 
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
