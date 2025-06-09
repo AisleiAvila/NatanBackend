@@ -15,4 +15,7 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
     @Query("SELECT s FROM Servico s JOIN s.regioesAtendimento r WHERE r = :regiao AND s.ativo = true")
     List<Servico> findByRegiaoAndAtivoTrue(@Param("regiao") Regiao regiao);
+    
+    @Query("SELECT s FROM Servico s JOIN s.regioesAtendimento r WHERE r = :regiao")
+    List<Servico> findByRegioesContaining(@Param("regiao") Regiao regiao);
 }
