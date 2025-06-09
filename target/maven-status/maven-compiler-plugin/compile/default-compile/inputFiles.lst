@@ -1,5 +1,6 @@
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\config\DataLoader.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\config\ErrorAutoCorrector.java
+C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\config\FirebaseConfig.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\config\OpenApiConfig.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\config\SecurityConfig.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\controller\ArquivoController.java
@@ -83,7 +84,6 @@ C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutor
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\PerfilRepository.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\PermissaoRepository.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\PrestadorRepository.java
-C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\RegiaoRepository.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\RoleRepository.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\ServicoRepository.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\repository\SolicitacaoRepository.java
@@ -116,6 +116,7 @@ C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutor
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\service\RelatorioService.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\service\ServicoService.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\service\SmsService.java
+C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\service\SmsServiceFake.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\service\SolicitacaoService.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\service\StatusService.java
 C:\Users\aisle\Documents\Ambiente\NatanBackend\src\main\java\com\natanconstrutora\service\UserDetailsServiceImpl.java

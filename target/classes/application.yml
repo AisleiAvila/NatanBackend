@@ -89,3 +89,13 @@ springdoc:
     filter: true
   packages-to-scan: com.natanconstrutora.controller
   paths-to-match: /api/**
+
+sms:
+  api:
+    key: "fake-key"
+    url: "http://fake-url"
+
+whatsapp:
+  api:
+    key: "fake-key"
+    url: "http://fake-url"

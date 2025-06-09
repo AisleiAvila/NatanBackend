@@ -1,6 +1,7 @@
 package com.natanconstrutora.service;
 
 import com.natanconstrutora.model.Prestador;
+import com.natanconstrutora.model.RegiaoEnum;
 import com.natanconstrutora.repository.PrestadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -94,11 +95,11 @@ public class PrestadorService {
         return prestadorRepository.findByAvaliacaoMediaGreaterThanEqual(avaliacaoMedia);
     }
 
-    public List<Prestador> buscarPorRegiao(Long regiaoId) {
-        return prestadorRepository.findByRegioesId(regiaoId);
+    public List<Prestador> buscarPorRegiao(RegiaoEnum regiao) {
+        return prestadorRepository.findByRegiao(regiao);
     }
 
     public List<Prestador> buscarPorCategoria(Long categoriaId) {
         return prestadorRepository.findByCategoriasId(categoriaId);
     }
-} 
+}

@@ -1,20 +1,19 @@
 package com.natanconstrutora.controller;
 
-import com.natanconstrutora.dto.LoginRequest;
-import com.natanconstrutora.dto.LoginResponse;
 import com.natanconstrutora.dto.RefreshTokenRequest;
 import com.natanconstrutora.dto.RefreshTokenResponse;
 import com.natanconstrutora.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -24,6 +23,8 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    // Método login comentado para evitar conflito com AutenticacaoController
+    /*
     @Operation(summary = "Realizar login", description = "Autentica um usuário e retorna um token JWT")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
@@ -35,6 +36,7 @@ public class AuthController {
             @RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(authService.login(loginRequest));
     }
+    */
 
     @Operation(summary = "Renovar token", description = "Renova um token JWT usando o refresh token")
     @ApiResponses(value = {
@@ -48,13 +50,14 @@ public class AuthController {
         return ResponseEntity.ok(authService.refreshToken(refreshTokenRequest.getRefreshToken()));
     }
 
-    @Operation(summary = "Realizar logout", description = "Invalida o token JWT atual")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Logout realizado com sucesso")
-    })
-    @PostMapping("/logout")
-    public ResponseEntity<Void> logout() {
-        authService.logout();
-        return ResponseEntity.ok().build();
-    }
+    // Método logout comentado para evitar conflito de mapeamento
+    // @Operation(summary = "Realizar logout", description = "Invalida o token JWT atual")
+    // @ApiResponses(value = {
+    //     @ApiResponse(responseCode = "200", description = "Logout realizado com sucesso")
+    // })
+    // @PostMapping("/logout")
+    // public ResponseEntity<Void> logout() {
+    //     authService.logout();
+    //     return ResponseEntity.ok().build();
+    // }
 }

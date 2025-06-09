@@ -20,7 +20,6 @@ public interface PrestadorRepository extends JpaRepository<Prestador, Long> {
     boolean existsByCpf(String cpf);
     List<Prestador> findByNomeContainingIgnoreCase(String nome);
     List<Prestador> findByAvaliacaoMediaGreaterThanEqual(Double avaliacaoMedia);
-    List<Prestador> findByRegioesId(Long regiaoId);
     List<Prestador> findByCategoriasId(Long categoriaId);
     long countByDataCadastroBetween(LocalDateTime inicio, LocalDateTime fim);
     List<Prestador> findByRegiao(RegiaoEnum regiao);
@@ -30,4 +29,4 @@ public interface PrestadorRepository extends JpaRepository<Prestador, Long> {
 
     @Query("SELECT p.regiao as regiao, COUNT(p) as total FROM Prestador p WHERE p.dataCadastro BETWEEN :inicio AND :fim GROUP BY p.regiao")
     List<Map<String, Object>> findPrestadoresPorRegiao(@Param("inicio") LocalDateTime inicio, @Param("fim") LocalDateTime fim);
-} 
+}
