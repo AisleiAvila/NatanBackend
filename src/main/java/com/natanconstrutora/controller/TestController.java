@@ -1,12 +1,12 @@
 
 package com.natanconstrutora.controller;
 
-import com.natanconstrutora.model.User;
 import com.natanconstrutora.model.Servico;
 import com.natanconstrutora.model.Solicitacao;
-import com.natanconstrutora.repository.UserRepository;
+import com.natanconstrutora.model.User;
 import com.natanconstrutora.repository.ServicoRepository;
 import com.natanconstrutora.repository.SolicitacaoRepository;
+import com.natanconstrutora.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/public/test")
+@RequestMapping("/api/test")
 public class TestController {
 
     @Autowired
