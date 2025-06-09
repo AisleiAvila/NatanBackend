@@ -1,6 +1,8 @@
 
 package com.natanconstrutora.controller;
 
+import com.natanconstrutora.dto.LoginRequest;
+import com.natanconstrutora.dto.SignUpRequest;
 import com.natanconstrutora.model.Role;
 import com.natanconstrutora.model.RoleName;
 import com.natanconstrutora.model.User;
@@ -17,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -65,6 +68,31 @@ public class AuthController {
             return ResponseEntity.badRequest()
                     .body(Map.of("message", "Error: Username is already taken!"));
         }
+
+        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("message", "Error: Email is already in use!"));
+        }
+
+        // Create new user's account
+        User user = new User(signUpRequest.getUsername(),
+                             signUpRequest.getEmail(),
+                             passwordEncoder.encode(signUpRequest.getPassword()),
+                             signUpRequest.getNome());
+
+        user.setTelefone(signUpRequest.getTelefone());
+        user.setEndereco(signUpRequest.getEndereco());
+
+        Set<Role> roles = new HashSet<>();
+        Role userRole = roleRepository.findByName(RoleName.ROLE_CLIENT)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        roles.add(userRole);
+
+        user.setRoles(roles);
+        userRepository.save(user);
+
+        return ResponseEntity.ok(Map.of("message", "User registered successfully!"));
+    }
 
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity.badRequest()
